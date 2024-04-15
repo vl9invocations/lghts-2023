@@ -1,0 +1,26 @@
+[package]
+name = "lc-55"
+version = "0.1.0"
+description = "LC 55"
+authors = ["you"]
+license = ""
+repository = ""
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "=1.5.1", features = [] }
+
+[dependencies]
+tauri = { version = "=1.6.1", features = [ "window-close", "window-start-dragging", "shell-open"] }
+serde = { version = "1.0", features = ["derive"] }
+chrono = "0.4.26"
+isahc = { version = "1.7.2", features = ["serde", "serde_json", "json"] }
+serde_json = "1.0"
+ping = "0.5.2"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
