@@ -6,8 +6,12 @@ use serde_json::Value;
 use std::{
     fmt,
     net::{IpAddr, Ipv4Addr},
+    ops::Deref,
+    sync::Mutex,
     time::Duration,
 };
+const CONNECTION_URL: &str = "http://127.0.0.1:8008/zeroconf/";
+// const CONNECTION_URL: &str = "http://192.168.0.60:8081/zeroconf/";
 
 struct Light {
     dev_id: String,
@@ -19,76 +23,29 @@ struct Light {
     ssid: String,
 }
 
-#[derive(Serialize, Deserialize)]
-struct Data {
-    switch: String,
-}
-
-#[derive(Serialize, Deserialize)]
-struct CallBody {
-    device_id: String,
-    data: Data,
-}
-
-pub enum LightState {
-    ON,
-    OFF,
-}
-
-impl fmt::Display for LightState {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            LightState::ON => write!(f, "on"),
-            LightState::OFF => write!(f, "off"),
-        }
-    }
-}
-
-pub fn switch_light(state: LightState) -> bool {
-    // let switch_action = isahc::post(
-    //     "http://192.168.0.60:8081/zeroconf/switch",
-    //     serde_json::to_value(CallBody {
-    //         device_id: "".to_string(),
-    //         data: Data {
-    //             switch: LightState::ON.to_string(),
-    //         },
-    //     })
-    //     .unwrap(),
-    // );
-    // println!("{:?}", &switch_action);
-
-    if matches!(state, LightState::ON) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-pub fn switch_on() -> bool {
+pub async fn switch_on() -> bool {
     isahc::post(
-        // "http://127.0.0.1:8008/zeroconf/switch",
-        "http://192.168.0.60:8081/zeroconf/switch",
+        CONNECTION_URL.to_string() + "switch",
         "{
-                \"deviceid\": \"\",
-                \"data\": {
-                    \"switch\": \"on\"
-                }
-            }",
+    \"deviceid\": \"\",
+    \"data\": {
+        \"switch\": \"on\"
+    }
+}",
     )
     .unwrap();
-
     return true;
 }
 
-pub fn switch_off() -> bool {
+pub async fn switch_off() -> bool {
     isahc::post(
-        "http://192.168.0.60:8081/zeroconf/switch",
+        CONNECTION_URL.to_string() + "switch",
         "{
-                \"deviceid\": \"\",
-                \"data\": {
-                    \"switch\": \"off\"
-                }
-            }",
+    \"deviceid\": \"\",
+    \"data\": {
+        \"switch\": \"off\"
+    }
+}",
     )
     .unwrap();
 
@@ -113,18 +70,15 @@ pub fn switch_off() -> bool {
 //     response
 // }
 
-// pub fn get_switch_data() -> Result<isah, serde_json::Error> {
-pub fn get_switch_data() -> Result<Value, serde_json::Error> {
+pub async fn get_switch_data() -> Result<Value, serde_json::Error> {
     // ping_device(); // questionable!
     isahc::post(
-        // "http://127.0.0.1:8008/zeroconf/info",
-        "http://192.168.0.60:8081/zeroconf/info",
+        CONNECTION_URL.to_string() + "info",
         "{ 
-                \"deviceid\": \"\", 
-                \"data\": {} 
-            }",
+    \"deviceid\": \"\", 
+    \"data\": {} 
+}",
     )
-    // .unwrap()
-    // .json()
-    // .unwrap()
+    .unwrap()
+    .json()
 }
