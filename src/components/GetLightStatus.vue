@@ -1,13 +1,22 @@
 <script setup>
 import { ref } from "vue";
 import { invoke } from "@tauri-apps/api/tauri";
+import { listen } from '@tauri-apps/api/event';
 
 const lightStatus = ref("");
-const lightState = ref();
+const lightState = ref("");
 
 async function get_light_status() {
   // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
   lightStatus.value = await invoke("get_light_statuses");
+  await listen('lightstatus', (event) => {
+    console.log(event.payload.message);
+    if (event.payload.message === 1) {
+      lightState.value = true;
+    } else {
+      lightState.value = false;
+    }
+  });
 }
 
 async function turn_switch() {

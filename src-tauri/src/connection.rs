@@ -1,27 +1,30 @@
 // use chrono::Duration;
-use isahc::{Error, ReadResponseExt};
-use ping::ping;
-use serde::{Deserialize, Serialize};
-use serde_json::Value;
-use std::{
-    fmt,
-    net::{IpAddr, Ipv4Addr},
-    ops::Deref,
-    sync::Mutex,
-    time::Duration,
+use isahc::{
+    // Error,
+    ReadResponseExt,
 };
-const CONNECTION_URL: &str = "http://127.0.0.1:8008/zeroconf/";
-// const CONNECTION_URL: &str = "http://192.168.0.60:8081/zeroconf/";
+// use ping::ping;
+// use serde::{Deserialize, Serialize};
+use serde_json::Value;
+// use std::{
+//     // fmt,
+//     // net::{IpAddr, Ipv4Addr},
+//     // ops::Deref,
+//     // sync::Mutex,
+//     // time::Duration,
+// };
+// const CONNECTION_URL: &str = "http://127.0.0.1:8008/zeroconf/";
+const CONNECTION_URL: &str = "http://192.168.0.60:8081/zeroconf/";
 
-struct Light {
-    dev_id: String,
-    name: String,
-    switch: bool,
-    startup: bool,
-    pulse: bool,
-    pulse_width: u64,
-    ssid: String,
-}
+// struct Light {
+//     dev_id: String,
+//     name: String,
+//     switch: bool,
+//     startup: bool,
+//     pulse: bool,
+//     pulse_width: u64,
+//     ssid: String,
+// }
 
 pub async fn switch_on() -> bool {
     isahc::post(
