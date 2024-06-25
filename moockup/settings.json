@@ -1,0 +1,125 @@
+{
+    "uuid": "1b6ecd23-1d14-48ca-b2d3-b2b0abcd8326",
+    "lastMigration": 32,
+    "name": "Lightswitch",
+    "endpointPrefix": "zeroconf",
+    "latency": 0,
+    "port": 8008,
+    "hostname": "",
+    "folders": [],
+    "routes": [
+        {
+            "uuid": "0c910ca5-3d49-466b-b241-7235faae28df",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "switch",
+            "responses": [
+                {
+                    "uuid": "72b3ac68-e8fd-4e18-ad23-4bcdd490441b",
+                    "body": "{}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        },
+        {
+            "uuid": "43941fba-14c9-410d-88d4-b192fbcbf489",
+            "type": "http",
+            "documentation": "",
+            "method": "post",
+            "endpoint": "info",
+            "responses": [
+                {
+                    "uuid": "3aa7056b-85cc-4bbc-8c15-a2e594ecb826",
+                    "body": "{\n  \"seq\": 2,\n  \"error\": 0,\n  \"data\": {\n    \"switch\": \"on\",\n    \"startup\": \"off\",\n    \"pulse\": \"off\",\n    \"pulseWidth\": 500,\n    \"ssid\": \"eWeLink\",\n    \"otaUnlock\": false,\n    \"fwVersion\": \"3.5.0\",\n    \"deviceid\": \"100000140e\",\n    \"bssid\": \"ec:17:2f:3d:15:e\",\n    \"signalStrength\": -25\n  }\n}",
+                    "latency": 0,
+                    "statusCode": 200,
+                    "label": "",
+                    "headers": [],
+                    "bodyType": "INLINE",
+                    "filePath": "",
+                    "databucketID": "",
+                    "sendFileAsBody": false,
+                    "rules": [],
+                    "rulesOperator": "OR",
+                    "disableTemplating": false,
+                    "fallbackTo404": false,
+                    "default": true,
+                    "crudKey": "id",
+                    "callbacks": []
+                }
+            ],
+            "responseMode": null
+        }
+    ],
+    "rootChildren": [
+        {
+            "type": "route",
+            "uuid": "0c910ca5-3d49-466b-b241-7235faae28df"
+        },
+        {
+            "type": "route",
+            "uuid": "43941fba-14c9-410d-88d4-b192fbcbf489"
+        }
+    ],
+    "proxyMode": false,
+    "proxyHost": "",
+    "proxyRemovePrefix": false,
+    "tlsOptions": {
+        "enabled": false,
+        "type": "CERT",
+        "pfxPath": "",
+        "certPath": "",
+        "keyPath": "",
+        "caPath": "",
+        "passphrase": ""
+    },
+    "cors": true,
+    "headers": [
+        {
+            "key": "Content-Type",
+            "value": "application/json"
+        },
+        {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+        },
+        {
+            "key": "Access-Control-Allow-Methods",
+            "value": "GET,POST,PUT,PATCH,DELETE,HEAD,OPTIONS"
+        },
+        {
+            "key": "Access-Control-Allow-Headers",
+            "value": "Content-Type, Origin, Accept, Authorization, Content-Length, X-Requested-With"
+        }
+    ],
+    "proxyReqHeaders": [
+        {
+            "key": "",
+            "value": ""
+        }
+    ],
+    "proxyResHeaders": [
+        {
+            "key": "",
+            "value": ""
+        }
+    ],
+    "data": [],
+    "callbacks": []
+}
