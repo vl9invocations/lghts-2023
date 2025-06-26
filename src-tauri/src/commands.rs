@@ -1,7 +1,7 @@
 // use isahc::ReadResponseExt;
 use crate::{connection, state::LightState};
 use serde_json::Value;
-use tauri::{Manager, State};
+use tauri::{Emitter, State};
 
 #[tauri::command]
 pub async fn turn_switch(state: State<'_, LightState>) -> Result<(), ()> {
@@ -10,12 +10,10 @@ pub async fn turn_switch(state: State<'_, LightState>) -> Result<(), ()> {
     if switch_state == String::from("\"on\"") {
         connection::switch_off().await;
         *state.0.lock().unwrap() = false;
-        // println!("Switch off state: {:?}", *state);
         Ok(())
     } else {
         connection::switch_on().await;
         *state.0.lock().unwrap() = true;
-        // println!("Switch on state: {:?}", *state);
         Ok(())
     }
 }
@@ -34,12 +32,12 @@ pub async fn get_light_statuses(
     match switch_state {
         "on" => {
             *state.0.lock().unwrap() = true;
-            app.emit_all("lightstatus", crate::state::Payload { message: 1 })
+            app.emit("lightstatus", crate::state::Payload { message: 1 })
                 .unwrap();
         }
         _ => {
             *state.0.lock().unwrap() = false;
-            app.emit_all("lightstatus", crate::state::Payload { message: 0 })
+            app.emit("lightstatus", crate::state::Payload { message: 0 })
                 .unwrap();
         }
     }
@@ -52,16 +50,16 @@ pub async fn get_light_statuses(
     ))
 }
 
-// #[tauri::command]
-// pub async fn get_initial_state() -> u8 {
-//     let switch_response: Value = connection::get_switch_data().await.unwrap();
-//     let switch_state: &str = &switch_response["data"]["switch"].to_string();
+#[tauri::command]
+pub async fn get_initial_state() -> u8 {
+    let switch_response: Value = connection::get_switch_data().await.unwrap();
+    let switch_state: &str = &switch_response["data"]["switch"].to_string();
 
-//     match switch_state {
-//         "true" => 1,
-//         _ => 0,
-//     }
-// }
+    match switch_state {
+        "true" => 1,
+        _ => 0,
+    }
+}
 
 // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
 // #[tauri::command]

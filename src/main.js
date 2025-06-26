@@ -1,7 +1,8 @@
 import { createApp } from "vue";
 import "./styles.css";
 import App from "./App.vue";
-import { appWindow } from '@tauri-apps/api/window'
+import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow'
+const appWindow = getCurrentWebviewWindow()
 
 createApp(App).mount("#app");
 
